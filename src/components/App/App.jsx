@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import ContactForm from '../ContactForm/ContactForm';
 import SearchBox from '../SearchBox/SearchBox';
 import ContactList from '../ContactList/ContactList';
@@ -7,6 +7,9 @@ import initialContacts from '../contacts.json';
 export default function App() {
     const [contacts, setContacts] = useState(initialContacts);
     const [filter, setFilter] = useState("");
+    useEffect(() => {
+        console.log(contacts);
+    }, [contacts]);
 
     const addContact = (newContact) => {
         setContacts((prevContacts) => {
