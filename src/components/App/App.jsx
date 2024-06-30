@@ -7,7 +7,7 @@ import initialContacts from '../contacts.json';
 export default function App() {
     const [filter, setFilter] = useState("");
 
-   const [contacts, setContacts] = useState(() => {
+    const [contacts, setContacts] = useState(() => {
         const savedContacts = window.localStorage.getItem("saved contacts");
         if (savedContacts !== null) {
             try {
@@ -30,7 +30,7 @@ export default function App() {
     }, [contacts]);
 
     const addContact = (newContact) => {
-        const uniqueId = `${Date.now().toString()}-${newContact.name}-${newContact.number}`;
+        const uniqueId = `${Date.now()}-${contacts.length}`;
         const contactWithId = { ...newContact, id: uniqueId };
         setContacts((prevContacts) => {
             return [...prevContacts, contactWithId];

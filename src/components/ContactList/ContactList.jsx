@@ -6,10 +6,10 @@ export default function ContactList({ contacts, onDelete }) {
 
     return (
         <ul className={css.list}>
-            {contacts.map((contact) => {
+            {contacts.map((contact, index) => {
                 console.log('Rendering contact with id:', contact.id);
                 return (
-                    <li className={css.item} key={contact.id}>
+                    <li className={css.item} key={contact.id || index}>
                         <Contact data={contact} onDelete={onDelete} />
                     </li>
                 );
@@ -17,3 +17,4 @@ export default function ContactList({ contacts, onDelete }) {
         </ul>
     );
 }
+
