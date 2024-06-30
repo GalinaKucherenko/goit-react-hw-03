@@ -5,15 +5,35 @@ import ContactList from '../ContactList/ContactList';
 import initialContacts from '../contacts.json';
 
 export default function App() {
-    const [contacts, setContacts] = useState(initialContacts);
     const [filter, setFilter] = useState("");
+
+   const [contacts, setContacts] = useState(() => {
+        const savedContacts = window.localStorage.getItem("saved contacts");
+        if (savedContacts !== null) {
+            try {
+                const parsedContacts = JSON.parse(savedContacts);
+                if (Array.isArray(parsedContacts)) {
+                    return parsedContacts;
+                } else {
+                    return initialContacts;
+                }
+            } catch (error) {
+                console.error("Failed to parse saved contacts:", error);
+                return initialContacts;
+            }
+        }
+        return initialContacts;
+    });
+
     useEffect(() => {
-        console.log(contacts);
+        window.localStorage.setItem("saved contacts", JSON.stringify(contacts));
     }, [contacts]);
 
     const addContact = (newContact) => {
+        const uniqueId = `${Date.now().toString()}-${newContact.name}-${newContact.number}`;
+        const contactWithId = { ...newContact, id: uniqueId };
         setContacts((prevContacts) => {
-            return [...prevContacts, newContact];
+            return [...prevContacts, contactWithId];
         });
     };
 
